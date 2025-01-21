@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 
-export class LoanDetailsPage {
+class LoanDetailsPage {
   constructor(page) {
     this.page = page;
     this.continueButton = page.getByRole('button', { name: 'Continue' });
@@ -122,4 +122,18 @@ export class LoanDetailsPage {
     this.continueButton.click();
     await expect(this.page.getByText('Enter a valid UK mobile phone')).toBeVisible();
   }
+
+  async enterValidNumber () {
+    // Verify heading is displayed on page
+    await expect(this.page.getByRole('heading', { name: 'What’s your mobile number?' })).toBeVisible();
+
+    // Verify sms info checkbox is displayed
+    await expect(this.page.getByText('Keep updated Receive a link')).toBeVisible();
+
+    // Verify invalid number does not pass form validation
+    await this.page.locator('#mobileNumber').fill('07897641544');
+    this.continueButton.click();
+  }
 }; 
+
+export default LoanDetailsPage;

@@ -1,6 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-const {LoanDetailsPage} = require('../pageObjects/loan-details-page')
+import LoanDetailsPage from '../pageObjects/loan-details-page';
 
 test.describe('Monevo Loan Application Test', () => {
 
@@ -35,6 +35,7 @@ test.describe('Monevo Loan Application Test', () => {
     await loanDetailsPage.enterLoanPersonName();
     await loanDetailsPage.enterLoanPersonDob();
     await loanDetailsPage.enterEmail();
+    await loanDetailsPage.enterValidNumber();
   });
 
 });
