@@ -6,7 +6,6 @@ test.describe('Monevo Loan Application Test', () => {
   let loanDetailsPage;
 
   test.beforeEach(async ({page}) => {
-    test.setTimeout(60000);
     loanDetailsPage = new LoanDetailsPage(page);
 
     // Navigate to the loan application page before each test
