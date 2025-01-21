@@ -7,9 +7,6 @@ This project includes tests for validating the Loan Details form in an applicati
 - [Test Structure](#test-structure)
 - [Test Cases](#test-cases)
 - [Running Tests Locally](#running-tests-locally)
-- [Running Tests on CI/CD](#running-tests-on-cicd)
-- [Test Reports](#test-reports)
-
 ---
 
 ### Setup
@@ -92,29 +89,8 @@ The tests are designed to verify the form submission with valid and invalid inpu
 
 ---
 
-### Running Tests on CI/CD
-
-This repository is integrated with GitHub Actions to automatically run tests on push or pull request events to the `main` or `master` branches.
-
-The CI workflow is defined in the `.github/workflows/playwright.yml` file. The configuration:
-- Installs dependencies and Playwright browsers.
-- Runs tests using Playwright.
-- Uploads test reports for review.
-
-When a push or pull request is made to the `main` or `master` branch, the tests will automatically run and the results will be available in the GitHub Actions UI.
-
----
-
-### Test Reports
-
-After running the tests, the test reports are generated in the `playwright-report/` directory. This directory contains detailed reports on test execution, including screenshots, videos, and logs.
-
-Test reports are uploaded as artifacts to GitHub Actions and are retained for 30 days.
-
----
-
 ### Conclusion
 
-This project aims to provide a solid framework for testing the loan details form, ensuring that all fields behave correctly and validations work as expected. It integrates seamlessly with CI/CD pipelines for automated testing with every change.
+This project aims to provide a solid framework for testing the loan details form, ensuring that all fields behave correctly and validations work as expected. 
 
 ---
