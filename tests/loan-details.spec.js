@@ -26,4 +26,15 @@ test.describe('Monevo Loan Application Test', () => {
     await loanDetailsPage.enterInvalidNumber();
   });
 
+  test('Verify correct phone number passes form validation', async ({page}) => {
+    const loanDetailsPage = new LoanDetailsPage(page);
+    await loanDetailsPage.enterLoanAmount();
+    await loanDetailsPage.enterLoanDuration();
+    await loanDetailsPage.enterLoanUse();
+    await loanDetailsPage.enterLoanPersonTitle();
+    await loanDetailsPage.enterLoanPersonName();
+    await loanDetailsPage.enterLoanPersonDob();
+    await loanDetailsPage.enterEmail();
+  });
+
 });

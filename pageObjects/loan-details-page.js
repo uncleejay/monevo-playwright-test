@@ -112,6 +112,14 @@ export class LoanDetailsPage {
 
   async enterInvalidNumber () {
     // Verify heading is displayed on page
-    await expect(this.page.getByRole('heading', { name: 'What’s your mobile number?' })).toBeVisible()
+    await expect(this.page.getByRole('heading', { name: 'What’s your mobile number?' })).toBeVisible();
+
+    // Verify sms info checkbox is displayed
+    await expect(this.page.getByText('Keep updated Receive a link')).toBeVisible();
+
+    // Verify invalid number does not pass form validation
+    await this.page.locator('#mobileNumber').fill('310323258');
+    this.continueButton.click();
+    await expect(this.page.getByText('Enter a valid UK mobile phone')).toBeVisible();
   }
 }; 
