@@ -25,7 +25,7 @@ jobs:
       run: npx playwright install chromium  # Only install Chromium explicitly if you need it
 
     - name: Run Playwright tests
-      run: npx playwright test  # Runs the Playwright tests
+      run: npx playwright test --workers=4 --project=chromium # Runs the Playwright tests
 
     - name: Upload Playwright report
       uses: actions/upload-artifact@v3  # Updated to the latest version
