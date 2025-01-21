@@ -22,7 +22,7 @@ jobs:
       run: npm ci  # Installs Playwright and any other dependencies listed in package-lock.json
 
     - name: Install Playwright Browsers (Chromium only)
-      run: npx playwright install chromium  # Only install Chromium explicitly if you need it
+      run: npx playwright install chromium  
 
     - name: Run Playwright tests
       run: npx playwright test --workers=4 --project=chromium # Runs the Playwright tests
