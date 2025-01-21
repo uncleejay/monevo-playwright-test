@@ -9,7 +9,7 @@ test.describe('Monevo Loan Application Test', () => {
     loanDetailsPage = new LoanDetailsPage(page);
 
     // Navigate to the loan application page before each test
-    await page.goto('/');
+    await page.goto('https://money.monevo.co.uk');
 
     // verify page loaded
     await expect(page).toHaveURL(`/apply/loan-details/amount`);
