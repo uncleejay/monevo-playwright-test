@@ -5,8 +5,8 @@ This project includes tests for validating the Loan Details form in an applicati
 ## Table of Contents
 - [Setup](#setup)
 - [Test Structure](#test-structure)
-- [Test Cases](#test-cases)
 - [Running Tests Locally](#running-tests-locally)
+- [Test Cases](#test-cases)
 ---
 
 ### Setup
@@ -27,7 +27,21 @@ This project includes tests for validating the Loan Details form in an applicati
     npx playwright install --with-deps
     ```
 
-4. Ensure you have Node.js installed (preferably version `lts/*`).
+4. Ensure you have Node.js installed.
+
+---
+
+### Running Tests Locally
+
+1. Run the tests:
+    ```bash
+    npx playwright test
+    ```
+
+2. You can specify which test to run using the `--project` flag if you have multiple configurations. For example:
+    ```bash
+    npx playwright test --project=firefox
+    ```
 
 ---
 
@@ -70,24 +84,7 @@ The tests are designed to verify the form submission with valid and invalid inpu
 
 ---
 
-### Running Tests Locally
 
-1. Ensure all dependencies are installed by running:
-    ```bash
-    npm install
-    ```
-
-2. Run the tests:
-    ```bash
-    npx playwright test
-    ```
-
-3. You can specify which test to run using the `--project` flag if you have multiple configurations. For example:
-    ```bash
-    npx playwright test --project=firefox
-    ```
-
----
 
 ### Conclusion
 
