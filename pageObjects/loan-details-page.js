@@ -4,48 +4,46 @@ class LoanDetailsPage {
   constructor(page) {
     this.page = page;
     this.continueButton = page.getByRole('button', { name: 'Continue' });
+
+    // Regex patterns
+    this.emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    this.ukPhoneRegex = /^07\d{8,9}$/; // UK mobile numbers starting with '07', 10-11 digits
   }
 
   async enterLoanAmount() {
-    // Verify that the heading is displayed on page
+    // Assert heading is visible
     await expect(this.page.getByRole('heading', { name: 'How much would you like to' })).toBeVisible();
 
-    // Verify error message is displayed when continue button is clicked and the loan amount field is empty
+    // Assert error message is displayed for empty field
     await this.continueButton.click();
     await expect(this.page.getByText('Please enter a valid loan')).toBeVisible();
 
-    // Enter loan amount and click continue
+    // Fill loan amount and continue
     await this.page.getByRole('textbox').fill('1000');
     await this.continueButton.click();
   }
 
   async enterLoanDuration() {
-    // Verify loan duration heading is displayed
+    // Assert heading is visible
     await expect(this.page.getByRole('heading', { name: 'How long do you need to pay' })).toBeVisible();
 
-    // List of expected loan duration options
+    // Loan duration options
     const loanDurations = [
-      '3 months',
-      '6 months',
-      '9 months',
-      '1 year',
-      '2 years',
-      '3 years',
-      '4 years',
-      '5+ years',
+      '3 months', '6 months', '9 months', '1 year', 
+      '2 years', '3 years', '4 years', '5+ years',
     ];
 
-    // Loop through each loan duration and verify it exists on the page
+    // Verify each loan duration option is visible
     for (const duration of loanDurations) {
       await expect(this.page.getByRole('button', { name: duration })).toBeVisible();
     }
 
-    // Click "3 months"
+    // Select "3 months"
     await this.page.getByRole('button', { name: '3 months' }).click();
   }
 
   async enterLoanUse() {
-    // Verify loan use headin is displayed on page
+    // Assert heading is visible
     await expect(this.page.getByRole('heading', { name: 'What do you want to use the' })).toBeVisible();
 
     // Select "Bills / Expenses"
@@ -53,7 +51,7 @@ class LoanDetailsPage {
   }
 
   async enterLoanPersonTitle() {
-    // Verify "What’s your title?" heading is displayed
+    // Assert heading is visible
     await expect(this.page.getByRole('heading', { name: 'What’s your title?' })).toBeVisible();
 
     // Select "Mr."
@@ -61,79 +59,84 @@ class LoanDetailsPage {
   }
 
   async enterLoanPersonName() {
-    // Verify "What’s your name?" heading is displayed
+    // Assert heading is visible
     await expect(this.page.getByRole('heading', { name: 'What’s your name?' })).toBeVisible();
 
-    // Verify the info note is displayed
+    // Assert info note is visible
     await expect(this.page.getByText('Your details are required, to')).toBeVisible();
-    
-    // Verify error message is handled for firstname and lastname
+
+    // Assert error messages for empty fields
     await this.continueButton.click();
     await expect(this.page.getByText('Please enter your full first')).toBeVisible();
     await expect(this.page.getByText('Please enter your full last')).toBeVisible();
 
-    // Fill first and last name
+    // Fill first and last name and continue
     await this.page.locator('#firstName').fill('Joseph');
     await this.page.locator('#lastName').fill('Coleshowers');
-
-    // Click continue
     await this.continueButton.click();
   }
 
   async enterLoanPersonDob() {
+    // Click continue and assert DOB heading is visible
     await this.continueButton.click();
-    // Verify "What’s your date of birth?" heading is displayed
     await expect(this.page.getByRole('heading', { name: 'What’s your date of birth?' })).toBeVisible();
 
-    // Verify error message for missing DOB
+    // Assert error message for missing DOB
     await this.continueButton.click();
     await expect(this.page.getByText('Enter a valid birth date')).toBeVisible();
 
-    // Fill DOB and click continue
+    // Fill DOB and continue
     await this.page.locator('#dateOfBirth').fill('02/02/2000');
     await this.continueButton.click();
   }
 
-  async enterEmail () {
-    // Verify info spam note is displayed to the user
+  async enterEmail() {
+    // Assert spam info note is visible
     await this.continueButton.click();
     await expect(this.page.getByText('Don’t worry, we won’t spam')).toBeVisible();
 
-    //Verify incorrect email error is displayed
-    await this.page.locator('#emailAddress').fill('jayceo@gmai');
-    await this.continueButton.click();
-    await expect(this.page.getByText('Please enter a valid email')).toBeVisible();
+    // Verify invalid email and assert error message
+    const invalidEmail = 'jayceo@gmai';
+    if (!this.emailRegex.test(invalidEmail)) {
+      await this.page.locator('#emailAddress').fill(invalidEmail);
+      await this.continueButton.click();
+      await expect(this.page.getByText('Please enter a valid email')).toBeVisible();
+    }
 
-    // Enter valid email
-    await this.page.locator('#emailAddress').clear()
-    await this.page.locator('#emailAddress').fill('coleshowers@gmail.com');
-    await this.continueButton.click();
+    // Fill valid email and continue
+    const validEmail = 'coleshowers@gmail.com';
+    if (this.emailRegex.test(validEmail)) {
+      await this.page.locator('#emailAddress').fill(validEmail);
+      await this.continueButton.click();
+    }
   }
 
-  async enterInvalidNumber () {
-    // Verify heading is displayed on page
+  async enterInvalidNumber() {
+    // Assert heading and SMS info checkbox are visible
     await expect(this.page.getByRole('heading', { name: 'What’s your mobile number?' })).toBeVisible();
-
-    // Verify sms info checkbox is displayed
     await expect(this.page.getByText('Keep updated Receive a link')).toBeVisible();
 
-    // Verify invalid number does not pass form validation
-    await this.page.locator('#mobileNumber').fill('310323258');
-    this.continueButton.click();
-    await expect(this.page.getByText('Enter a valid UK mobile phone')).toBeVisible();
+    // Verify invalid number and assert error message
+    const invalidNumber = '310323258';
+    if (!this.ukPhoneRegex.test(invalidNumber)) {
+      await this.page.locator('#mobileNumber').fill(invalidNumber);
+      await this.continueButton.click();
+      await expect(this.page.getByText('Enter a valid UK mobile phone')).toBeVisible();
+    }
   }
 
-  async enterValidNumber () {
-    // Verify heading is displayed on page
+  async enterValidNumber() {
+    // Assert heading and SMS info checkbox are visible
     await expect(this.page.getByRole('heading', { name: 'What’s your mobile number?' })).toBeVisible();
-
-    // Verify sms info checkbox is displayed
     await expect(this.page.getByText('Keep updated Receive a link')).toBeVisible();
 
-    // Verify invalid number does not pass form validation
-    await this.page.locator('#mobileNumber').fill('07897641544');
-    this.continueButton.click();
+    // Fill valid number and continue
+    const validNumber = '07897641544';
+    if (this.ukPhoneRegex.test(validNumber)) {
+      await this.page.locator('#mobileNumber').fill(validNumber);
+      await this.continueButton.click();
+    }
   }
-}; 
+}
 
 export default LoanDetailsPage;
