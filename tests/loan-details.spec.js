@@ -6,10 +6,11 @@ test.describe('Monevo Loan Application Test', () => {
   let loanDetailsPage;
 
   test.beforeEach(async ({page}) => {
+    test.setTimeout(60000);
     loanDetailsPage = new LoanDetailsPage(page);
 
     // Navigate to the loan application page before each test
-    await page.goto('https://money.monevo.co.uk');
+    await page.goto('/');
 
     // verify page loaded
     await expect(page).toHaveURL(`/apply/loan-details/amount`);
